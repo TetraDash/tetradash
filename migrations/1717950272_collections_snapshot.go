@@ -15,7 +15,7 @@ func init() {
 			{
 				"id": "_pb_users_auth_",
 				"created": "2024-06-09 04:49:20.504Z",
-				"updated": "2024-06-09 04:49:20.508Z",
+				"updated": "2024-06-09 16:23:32.866Z",
 				"name": "users",
 				"type": "auth",
 				"system": false,
@@ -78,7 +78,7 @@ func init() {
 			{
 				"id": "97g4wl36il3i1gg",
 				"created": "2024-06-09 16:10:02.388Z",
-				"updated": "2024-06-09 16:10:18.175Z",
+				"updated": "2024-06-09 16:24:13.283Z",
 				"name": "devices",
 				"type": "auth",
 				"system": false,
@@ -96,6 +96,34 @@ func init() {
 							"max": null,
 							"pattern": ""
 						}
+					},
+					{
+						"system": false,
+						"id": "c2wrh7pa",
+						"name": "width",
+						"type": "number",
+						"required": false,
+						"presentable": false,
+						"unique": false,
+						"options": {
+							"min": null,
+							"max": null,
+							"noDecimal": false
+						}
+					},
+					{
+						"system": false,
+						"id": "n5pbfopf",
+						"name": "height",
+						"type": "number",
+						"required": false,
+						"presentable": false,
+						"unique": false,
+						"options": {
+							"min": null,
+							"max": null,
+							"noDecimal": false
+						}
 					}
 				],
 				"indexes": [],
@@ -105,8 +133,8 @@ func init() {
 				"updateRule": "id = @request.auth.id",
 				"deleteRule": null,
 				"options": {
-					"allowEmailAuth": true,
-					"allowOAuth2Auth": true,
+					"allowEmailAuth": false,
+					"allowOAuth2Auth": false,
 					"allowUsernameAuth": true,
 					"exceptEmailDomains": null,
 					"manageRule": null,
