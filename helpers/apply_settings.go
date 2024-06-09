@@ -8,9 +8,7 @@ func ApplySettings(app *pocketbase.PocketBase) {
 
 	settings, err := app.Dao().FindSettings()
 	if err == nil {
-		if ConfigEnv.Debug {
-			settings.Meta.HideControls = true
-		}
+		settings.Meta.HideControls = ConfigEnv.Debug
 
 		//basic settings
 		settings.Meta.AppName = "Tetra Dash"

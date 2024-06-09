@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/TetraDash/tetradash/helpers"
+	_ "github.com/TetraDash/tetradash/migrations"
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
@@ -39,9 +40,6 @@ func main() {
 				}
 
 				return c.JSON(http.StatusOK, map[string]any{"error": "pocketbase web ui disabled"})
-			})
-			e.Router.GET("/", func(c echo.Context) error {
-				return c.Redirect(http.StatusPermanentRedirect, "/dashboard")
 			})
 		}
 
