@@ -1,0 +1,12 @@
+<script lang="ts">
+	import DashboardSidebar from '$lib/components/dashboard/DashboardSidebar.svelte';
+	import { Heading, Hr } from 'flowbite-svelte';
+	import { Section } from 'flowbite-svelte-blocks';
+</script>
+
+<DashboardSidebar>
+	<Section>
+		<Heading>Layouts</Heading>
+		<Hr />
+	</Section>
+</DashboardSidebar>
