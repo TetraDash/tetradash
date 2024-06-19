@@ -1,5 +1,7 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { pb } from '$lib/pb-client';
 	import {
 		Sidebar,
 		SidebarBrand,
@@ -11,8 +13,12 @@
 		ChartPieSolid,
 		GridSolid,
 		MobilePhoneSolid,
-		ArrowLeftToBracketOutline
+		ArrowLeftToBracketOutline,
+
+		ChartMixedOutline
+
 	} from 'flowbite-svelte-icons';
+	import { onMount } from 'svelte';
 	let spanClass = 'flex-1 ms-3 whitespace-nowrap';
 	$: activeUrl = $page.url.pathname;
 
@@ -22,7 +28,18 @@
 		img: '/tetradash-logo.svg'
 	};
 
-	function handleSignOut() {}
+	onMount(() => {
+		if (!pb.authStore.isValid) {
+			goto('/');
+		}
+		if (pb.authStore.model?.collection == 'devices') {
+			goto('/screens');
+		}
+	});
+	function handleSignOut() {
+		pb.authStore.clear();
+		goto('/');
+	}
 </script>
 
 <div class="flex h-screen w-screen">
@@ -54,6 +71,23 @@
 				<SidebarItem label="Layouts" {spanClass} href="/dashboard/layouts">
 					<svelte:fragment slot="icon">
 						<GridSolid
+							class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+						/>
+						<!-- <MailBoxSolid
+							class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+						/> -->
+					</svelte:fragment>
+					<!-- <svelte:fragment slot="subtext">
+						<span
+							class="ms-3 inline-flex h-3 w-3 items-center justify-center rounded-full bg-primary-200 p-3 text-sm font-medium text-primary-600 dark:bg-primary-900 dark:text-primary-200"
+						>
+							3
+						</span>
+					</svelte:fragment> -->
+				</SidebarItem>
+				<SidebarItem label="Widgets" {spanClass} href="/dashboard/widgets">
+					<svelte:fragment slot="icon">
+						<ChartMixedOutline
 							class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
 						/>
 						<!-- <MailBoxSolid
