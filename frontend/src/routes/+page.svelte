@@ -1,88 +1,49 @@
 <script lang="ts">
-	import { Section, Register } from 'flowbite-svelte-blocks';
-	import { Button, Checkbox, Label, Input, Alert } from 'flowbite-svelte';
+	import { ComputerSpeakerSolid, UserSolid } from 'flowbite-svelte-icons';
+	import { Button, Heading, Card, Hr } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
-	import { PB_USER_COLLECTION_ID, pb } from '$lib/pb-client';
+	import { PB_DEVICES_COLLECTION_ID, PB_USER_COLLECTION_ID, pb } from '$lib/pb-client';
 	import { goto } from '$app/navigation';
+	import { dev } from '$app/environment';
 
 	onMount(() => {
 		if (pb.authStore.isValid) {
-			goto('/dashboard');
+			if (pb.authStore.model!.collection == PB_USER_COLLECTION_ID) {
+				goto('/dashboard');
+			} else if (pb.authStore.model!.collection == PB_DEVICES_COLLECTION_ID) {
+				goto('/screens');
+			}
 		}
 	});
 
-	let alertMessage: string = '';
-	let username: string = '';
-	let password: string = '';
-
-	function handleLogin() {
-		// console.log(username, password);
-		pb.collection(PB_USER_COLLECTION_ID)
-			.authWithPassword(username, password)
-			.then((v) => {
-				goto('/dashboard');
-			})
-			.catch((e) => {
-				alertMessage = e.message;
-			});
+	function handleSignOut() {
+		pb.authStore.clear();
 	}
 </script>
 
 <svelte:head>
-	<title>Login - Tetra Dash</title>
+	<title>Sigin - Tetra Dash</title>
 </svelte:head>
 
-<Section name="login">
-	<Register href="/">
-		<svelte:fragment slot="top">
-			<img class="mr-2 h-8 w-8" src="/tetradash-logo.svg" alt="logo" />
-			Tetra Dash
-		</svelte:fragment>
-		<div class="space-y-4 p-6 sm:p-8 md:space-y-6">
-			<form class="flex flex-col space-y-6" action="/" on:submit|preventDefault={handleLogin}>
-				<h3 class="p-0 text-xl font-medium text-gray-900 dark:text-white">Log In</h3>
-				<Label class="space-y-2">
-					<span>User name</span>
-					<Input
-						type="text"
-						name="username"
-						placeholder="John Doe"
-						required
-						bind:value={username}
-					/>
-				</Label>
-				<Label class="space-y-2">
-					<span>Password</span>
-					<Input
-						type="password"
-						name="password"
-						placeholder="•••••"
-						required
-						bind:value={password}
-					/>
-				</Label>
-				<!-- <div class="flex items-start">
-					<Checkbox>Remember me</Checkbox>
-					<a href="/" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
-						>Forgot password?</a
-					>
-				</div> -->
-
-				{#if alertMessage.length > 0}
-					<Alert color="red">
-						{alertMessage}
-						<!-- Change a few things up and try submitting again. -->
-					</Alert>
-				{/if}
-
-				<Button type="submit" class="w-full1">Sign in</Button>
-				<!-- <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-					Don’t have an account yet? <a
-						href="/"
-						class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a
-					>
-				</p> -->
-			</form>
+<div class="flex h-screen items-center justify-center">
+	<Card>
+		<div class="text-center">
+			<Heading>Sigin As</Heading>
 		</div>
-	</Register>
-</Section>
+		<Hr />
+		<div class="mx-auto flex w-fit flex-col space-y-5">
+			<Button size="xl" href="/login-device">
+				<ComputerSpeakerSolid class="me-2 h-6 w-6" />
+				Device
+			</Button>
+			<Button size="xl" href="/login-admin">
+				<UserSolid class="me-2 h-6 w-6" />
+				Admin
+			</Button>
+
+			{#if dev && pb.authStore.isValid}
+				<Button outline on:click={handleSignOut}>Sign out</Button>
+			{/if}
+		</div>
+	</Card>
+</div>

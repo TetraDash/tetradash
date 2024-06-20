@@ -14,9 +14,7 @@
 		GridSolid,
 		MobilePhoneSolid,
 		ArrowLeftToBracketOutline,
-
 		ChartMixedOutline
-
 	} from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 	let spanClass = 'flex-1 ms-3 whitespace-nowrap';
@@ -32,7 +30,8 @@
 		if (!pb.authStore.isValid) {
 			goto('/');
 		}
-		if (pb.authStore.model?.collection == 'devices') {
+		console.log(pb.authStore.model);
+		if (pb.authStore.model?.collectionName == 'devices') {
 			goto('/screens');
 		}
 	});

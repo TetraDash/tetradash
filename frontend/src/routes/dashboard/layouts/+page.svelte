@@ -48,7 +48,7 @@
 	<form on:submit|preventDefault={handleCreate}>
 		<div class="mb-6">
 			<Label for="name" class="mb-2">Name</Label>
-			<Input type="text" id="name" placeholder="Youtube analytics" required bind:value={name} />
+			<Input type="text" id="name" placeholder="Youtube subscribers" required bind:value={name} />
 		</div>
 		<div class="mb-6">
 			<Label for="width" class="mb-2">Width</Label>
